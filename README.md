@@ -75,6 +75,9 @@ npm run dev
 - `npm run typecheck`: chequeo de tipos TypeScript
 - `npm run format`: autocorrección con ESLint
 - `npm run test`: tests unitarios base (Node test runner + TypeScript)
+- `npm run e2e`: smoke e2e (Playwright)
+- `npm run e2e:headed`: smoke e2e en modo visible
+- `npm run e2e:install`: instala browser Chromium para Playwright
 - `npm run build`: build de producción
 - `npm run check`: lint + typecheck + build
 
@@ -85,6 +88,7 @@ npm run dev
   - lint
   - typecheck
   - build
+  - smoke e2e Playwright (`chromium`)
 
 ## Seguridad de pedidos
 
