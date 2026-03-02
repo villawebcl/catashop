@@ -37,4 +37,7 @@ npm run dev
 - El número de WhatsApp configurado está en `src/app/carrito/page.tsx`.
 - La moneda está formateada a CLP en `src/lib/format.ts`.
 - Para desplegar, usa Vercel con las mismas variables de entorno.
-# catashop
+
+## Estado y roadmap técnico
+
+- Revisa `docs/PROJECT_STATUS_AND_ROADMAP.md` para el estado actual, riesgos y plan de mejora por sprints.
