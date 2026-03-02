@@ -56,8 +56,14 @@
   - Se añadió rate limit básico por `client_key` en `order_request_log`.
 - `security: route checkout through secure order RPC`
   - El checkout ahora persiste pedido con `create_order_secure` antes de abrir WhatsApp.
+- `perf(a11y): optimize product images and improve modal/cart accessibility`
+  - Se migró a `next/image` en flujos críticos con fallback controlado.
+  - Se mejoró focus handling del modal y etiquetado de cantidad en carrito.
+- `ops: add CI workflow and global error boundary`
+  - Se agregó pipeline de calidad en GitHub Actions.
+  - Se añadió `src/app/error.tsx` para manejo global de errores en runtime.
 
 ## Próximos pasos inmediatos
-1. Arrancar Sprint 2 con mejoras de performance (`next/image`) y accesibilidad.
-2. Iniciar Sprint 3: tests base + CI.
-3. Agregar observabilidad mínima y error boundary global.
+1. Iniciar Sprint 3: tests base (carrito + formateo de mensaje).
+2. Agregar smoke e2e de checkout por WhatsApp.
+3. Incorporar logger centralizado y métricas de errores.
