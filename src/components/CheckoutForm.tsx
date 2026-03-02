@@ -1,20 +1,16 @@
 import { useState } from "react";
 import type { CustomerDetails } from "@/lib/types";
+import {
+    sanitizeCustomerDetails,
+    SHIPPING_AGENCIES,
+    validateCustomerDetails,
+} from "@/lib/checkout";
 
 type CheckoutFormProps = {
     onSubmit: (data: CustomerDetails) => void;
     onCancel: () => void;
     total: string;
 };
-
-const AGENCIES = [
-    "BlueExpress",
-    "Chilexpress",
-    "Starken",
-    "Varmontt",
-    "Correos de Chile",
-    "Pullman Cargo",
-];
 
 export default function CheckoutForm({
     onSubmit,
@@ -27,8 +23,9 @@ export default function CheckoutForm({
         address: "",
         email: "",
         phone: "",
-        agency: AGENCIES[0],
+        agency: SHIPPING_AGENCIES[0],
     });
+    const [submitError, setSubmitError] = useState<string | null>(null);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -39,7 +36,14 @@ export default function CheckoutForm({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit(formData);
+        const clean = sanitizeCustomerDetails(formData);
+        const validationError = validateCustomerDetails(clean);
+        if (validationError) {
+            setSubmitError(validationError);
+            return;
+        }
+        setSubmitError(null);
+        onSubmit(clean);
     };
 
     return (
@@ -137,7 +141,7 @@ export default function CheckoutForm({
                         onChange={handleChange}
                         className="rounded-[18px] border border-[var(--line)] bg-transparent px-4 py-3 text-[var(--ink)] focus:border-[var(--accent)] focus:outline-none appearance-none"
                     >
-                        {AGENCIES.map((agency) => (
+                        {SHIPPING_AGENCIES.map((agency) => (
                             <option key={agency} value={agency} className="text-black">
                                 {agency}
                             </option>
@@ -147,6 +151,11 @@ export default function CheckoutForm({
             </div>
 
             <div className="mt-4 flex flex-col gap-4">
+                {submitError && (
+                    <p className="text-center text-xs uppercase tracking-[0.1em] text-red-600">
+                        {submitError}
+                    </p>
+                )}
                 <p className="text-center text-xs text-[var(--muted)]">
                     Total a confirmar: <span className="text-[var(--ink)] font-bold">{total}</span>
                 </p>

@@ -10,6 +10,7 @@ import {
 import { supabase } from "@/lib/supabase/client";
 import CheckoutForm from "@/components/CheckoutForm";
 import type { CustomerDetails } from "@/lib/types";
+import { sanitizeCustomerDetails, validateCustomerDetails } from "@/lib/checkout";
 
 const vendorPhone = "+56932422471";
 
@@ -26,6 +27,12 @@ export default function CarritoPage() {
 
   const handleWhatsApp = async (customer: CustomerDetails) => {
     if (items.length === 0) return;
+    const cleanCustomer = sanitizeCustomerDetails(customer);
+    const validationError = validateCustomerDetails(cleanCustomer);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
 
     setSaving(true);
     setError(null);
@@ -38,7 +45,7 @@ export default function CarritoPage() {
         items,
         total,
         status: "new",
-        customer_details: customer,
+        customer_details: cleanCustomer,
         readable_id: orderId,
       });
 
@@ -48,7 +55,7 @@ export default function CarritoPage() {
       }
     }
 
-    const message = buildWhatsAppMessage(items, total, customer, orderId);
+    const message = buildWhatsAppMessage(items, total, cleanCustomer, orderId);
     const whatsappPhone = normalizePhoneToWhatsApp(vendorPhone);
     const url = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
       message,

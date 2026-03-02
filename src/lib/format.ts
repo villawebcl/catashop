@@ -1,5 +1,8 @@
 import type { CartItem, CustomerDetails } from "@/lib/types";
 
+const cleanForWhatsAppLine = (value: string) =>
+  value.replace(/[\r\n]+/g, " ").replace(/\s+/g, " ").trim();
+
 export const formatCLP = (value: number) =>
   new Intl.NumberFormat("es-CL", {
     style: "currency",
@@ -18,7 +21,7 @@ export const buildWhatsAppMessage = (
 ) => {
   const lines = items.map(
     (item) =>
-      `• ${item.name} x${item.quantity} (${formatCLP(item.price * item.quantity)})`,
+      `• ${cleanForWhatsAppLine(item.name)} x${item.quantity} (${formatCLP(item.price * item.quantity)})`,
   );
 
   let message = [
@@ -34,12 +37,12 @@ export const buildWhatsAppMessage = (
       "",
       "------------------",
       "*Datos de Envío*",
-      `Nombre: ${customer.name}`,
-      `RUT: ${customer.rut}`,
-      `Dirección: ${customer.address}`,
-      `Email: ${customer.email}`,
-      `Teléfono: ${customer.phone}`,
-      `Agencia: ${customer.agency}`,
+      `Nombre: ${cleanForWhatsAppLine(customer.name)}`,
+      `RUT: ${cleanForWhatsAppLine(customer.rut)}`,
+      `Dirección: ${cleanForWhatsAppLine(customer.address)}`,
+      `Email: ${cleanForWhatsAppLine(customer.email)}`,
+      `Teléfono: ${cleanForWhatsAppLine(customer.phone)}`,
+      `Agencia: ${cleanForWhatsAppLine(customer.agency)}`,
       "------------------",
     ];
   }
