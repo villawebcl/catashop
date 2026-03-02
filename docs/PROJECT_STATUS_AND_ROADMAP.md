@@ -34,3 +34,23 @@
 - Commits pequeños y con alcance único.
 - Verificación local por cada bloque.
 - Notas de rollback y criterios de aceptación por cambio.
+
+## Progreso ejecutado
+- `docs: add project status and sprint roadmap`
+  - Se agregó esta documentación y referencia en README.
+- `chore: add quality scripts and env template`
+  - Se añadieron scripts `typecheck`, `format`, `check` y `.env.example`.
+- `fix(db): align base schema with order and product identifiers`
+  - `supabase/schema.sql` ahora incluye `readable_id` y `customer_details`.
+- `chore: resolve baseline lint errors without behavior changes`
+  - Se removieron errores de lint críticos del baseline.
+- `security: add baseline HTTP security headers and CSP`
+  - Se añadieron headers de hardening en `next.config.ts`.
+- `security: validate and sanitize checkout customer data`
+  - Validación y saneo del checkout antes de persistir y enviar por WhatsApp.
+
+## Próximos pasos inmediatos
+1. Endurecer RLS para admin real (no solo `authenticated`).
+2. Agregar anti-abuse para creación de órdenes públicas.
+3. Mejorar integridad de precios/totales (recalcular server-side en Supabase).
+4. Arrancar Sprint 2 con mejoras de performance (`next/image`) y accesibilidad.
