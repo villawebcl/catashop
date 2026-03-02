@@ -57,8 +57,17 @@ npm run dev
 - `npm run lint`: reglas ESLint
 - `npm run typecheck`: chequeo de tipos TypeScript
 - `npm run format`: autocorrección con ESLint
+- `npm run test`: placeholder temporal (pendiente suite real)
 - `npm run build`: build de producción
 - `npm run check`: lint + typecheck + build
+
+## CI
+
+- Se incluye pipeline en `.github/workflows/ci.yml` con:
+  - instalación (`npm ci`)
+  - lint
+  - typecheck
+  - build
 
 ## Seguridad de pedidos
 
