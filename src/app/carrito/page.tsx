@@ -9,8 +9,9 @@ import {
 } from "@/lib/format";
 import { supabase } from "@/lib/supabase/client";
 import CheckoutForm from "@/components/CheckoutForm";
-import type { CustomerDetails } from "@/lib/types";
+import type { CartItem, CreateOrderSecureResponse, CustomerDetails } from "@/lib/types";
 import { sanitizeCustomerDetails, validateCustomerDetails } from "@/lib/checkout";
+import { getOrCreateCheckoutClientKey, toCheckoutItemPayload } from "@/lib/order";
 
 const vendorPhone = "+56932422471";
 
@@ -38,24 +39,31 @@ export default function CarritoPage() {
     setError(null);
 
     const orderId = generateOrderId();
+    let finalItems: CartItem[] = items;
+    let finalTotal = total;
 
-    // Intentamos guardar en Supabase, pero no bloqueamos si falla
+    // Intentamos guardar por RPC segura, pero no bloqueamos venta si falla.
     if (supabase) {
-      const { error: insertError } = await supabase.from("orders").insert({
-        items,
-        total,
-        status: "new",
-        customer_details: cleanCustomer,
-        readable_id: orderId,
-      });
+      const { data, error: createOrderError } = await supabase.rpc(
+        "create_order_secure",
+        {
+          p_items: toCheckoutItemPayload(items),
+          p_customer_details: cleanCustomer,
+          p_readable_id: orderId,
+          p_client_key: getOrCreateCheckoutClientKey(),
+        },
+      );
 
-      if (insertError) {
-        console.error("Error guardando pedido en Supabase:", insertError);
-        // No mostramos error al usuario para no detener la venta
+      if (createOrderError) {
+        console.error("Error creando pedido seguro en Supabase:", createOrderError);
+      } else if (Array.isArray(data) && data.length > 0) {
+        const secureOrder = data[0] as CreateOrderSecureResponse;
+        finalItems = secureOrder.order_items ?? items;
+        finalTotal = Number(secureOrder.order_total ?? total);
       }
     }
 
-    const message = buildWhatsAppMessage(items, total, cleanCustomer, orderId);
+    const message = buildWhatsAppMessage(finalItems, finalTotal, cleanCustomer, orderId);
     const whatsappPhone = normalizePhoneToWhatsApp(vendorPhone);
     const url = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
       message,

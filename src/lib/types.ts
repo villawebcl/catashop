@@ -22,6 +22,7 @@ export type Order = {
   readable_id?: string;
   created_at: string;
   items: CartItem[];
+  customer_details?: CustomerDetails | null;
   total: number;
   status: string;
 };
@@ -33,4 +34,10 @@ export type CustomerDetails = {
   email: string;
   phone: string;
   agency: string;
+};
+
+export type CreateOrderSecureResponse = {
+  order_id: string;
+  order_total: number;
+  order_items: CartItem[];
 };
