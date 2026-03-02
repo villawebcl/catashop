@@ -40,11 +40,20 @@ export default function CarritoPage() {
     setSaving(true);
     setError(null);
 
+    // Abrimos pestaña inmediatamente por gesto del usuario para evitar bloqueadores de pop-up.
+    const whatsappWindow = window.open("", "_blank", "noopener,noreferrer");
+    if (!whatsappWindow) {
+      setSaving(false);
+      setError("Tu navegador bloqueó la pestaña de WhatsApp. Habilita pop-ups e intenta nuevamente.");
+      return;
+    }
+
     const orderId = generateOrderId();
     let finalItems: CartItem[] = items;
     let finalTotal = total;
+    let orderPersisted = false;
 
-    // Intentamos guardar por RPC segura, pero no bloqueamos venta si falla.
+    // Guardamos por RPC segura y solo continuamos si persiste correctamente.
     if (supabase) {
       const { data, error: createOrderError } = await supabase.rpc(
         "create_order_secure",
@@ -61,11 +70,23 @@ export default function CarritoPage() {
           message: createOrderError.message,
           code: createOrderError.code,
         });
+        setError("No se pudo registrar tu pedido. Intenta nuevamente en unos segundos.");
       } else if (Array.isArray(data) && data.length > 0) {
         const secureOrder = data[0] as CreateOrderSecureResponse;
         finalItems = secureOrder.order_items ?? items;
         finalTotal = Number(secureOrder.order_total ?? total);
+        orderPersisted = true;
+      } else {
+        setError("No se pudo confirmar el pedido. Intenta nuevamente.");
       }
+    } else {
+      setError("No hay conexión de pedidos disponible. Intenta más tarde.");
+    }
+
+    if (!orderPersisted) {
+      whatsappWindow.close();
+      setSaving(false);
+      return;
     }
 
     const url = createWhatsAppCheckoutUrl(
@@ -77,7 +98,7 @@ export default function CarritoPage() {
     );
 
     clear();
-    window.open(url, "_blank", "noopener,noreferrer");
+    whatsappWindow.location.href = url;
     setSaving(false);
   };
 
