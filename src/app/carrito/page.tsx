@@ -40,14 +40,6 @@ export default function CarritoPage() {
     setSaving(true);
     setError(null);
 
-    // Abrimos pestaña inmediatamente por gesto del usuario para evitar bloqueadores de pop-up.
-    const whatsappWindow = window.open("", "_blank", "noopener,noreferrer");
-    if (!whatsappWindow) {
-      setSaving(false);
-      setError("Tu navegador bloqueó la pestaña de WhatsApp. Habilita pop-ups e intenta nuevamente.");
-      return;
-    }
-
     const orderId = generateOrderId();
     let finalItems: CartItem[] = items;
     let finalTotal = total;
@@ -84,7 +76,6 @@ export default function CarritoPage() {
     }
 
     if (!orderPersisted) {
-      whatsappWindow.close();
       setSaving(false);
       return;
     }
@@ -98,7 +89,10 @@ export default function CarritoPage() {
     );
 
     clear();
-    whatsappWindow.location.href = url;
+    const opened = window.open(url, "_blank", "noopener,noreferrer");
+    if (!opened) {
+      setError("Tu navegador bloqueó la pestaña de WhatsApp. Habilita pop-ups e intenta nuevamente.");
+    }
     setSaving(false);
   };
 
