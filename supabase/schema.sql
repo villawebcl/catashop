@@ -38,6 +38,11 @@ create table if not exists public.products (
 
 alter table public.products enable row level security;
 
+drop policy if exists "Public read products" on public.products;
+drop policy if exists "Admin insert products" on public.products;
+drop policy if exists "Admin update products" on public.products;
+drop policy if exists "Admin delete products" on public.products;
+
 create policy "Public read products"
 on public.products
 for select
@@ -81,6 +86,12 @@ create index if not exists order_request_log_client_key_created_at_idx
 on public.order_request_log (client_key, created_at desc);
 
 alter table public.order_request_log enable row level security;
+
+drop policy if exists "Public insert orders" on public.orders;
+drop policy if exists "Admin insert orders" on public.orders;
+drop policy if exists "Admin read orders" on public.orders;
+drop policy if exists "Admin update orders" on public.orders;
+drop policy if exists "Admin delete orders" on public.orders;
 
 create policy "Admin insert orders"
 on public.orders
@@ -220,6 +231,11 @@ grant execute on function public.create_order_secure(jsonb, jsonb, text, text) t
 insert into storage.buckets (id, name, public)
 values ('products', 'products', true)
 on conflict (id) do nothing;
+
+drop policy if exists "Public read product images" on storage.objects;
+drop policy if exists "Admin upload product images" on storage.objects;
+drop policy if exists "Admin update product images" on storage.objects;
+drop policy if exists "Admin delete product images" on storage.objects;
 
 create policy "Public read product images"
 on storage.objects
