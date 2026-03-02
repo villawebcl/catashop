@@ -50,9 +50,14 @@
   - Validación y saneo del checkout antes de persistir y enviar por WhatsApp.
 - `security(db): enforce admin-only RLS via admin_users table`
   - Se reemplazó control por `authenticated` con control por `admin_users` + `is_admin()`.
+- `security(db): secure order creation via RPC + anti-abuse`
+  - Se agregó `create_order_secure` para recalcular total server-side.
+  - Insert público directo en `orders` quedó deshabilitado.
+  - Se añadió rate limit básico por `client_key` en `order_request_log`.
+- `security: route checkout through secure order RPC`
+  - El checkout ahora persiste pedido con `create_order_secure` antes de abrir WhatsApp.
 
 ## Próximos pasos inmediatos
-1. Agregar anti-abuse para creación de órdenes públicas.
-2. Mejorar integridad de precios/totales (recalcular server-side en Supabase).
-3. Arrancar Sprint 2 con mejoras de performance (`next/image`) y accesibilidad.
-4. Iniciar Sprint 3: tests base + CI.
+1. Arrancar Sprint 2 con mejoras de performance (`next/image`) y accesibilidad.
+2. Iniciar Sprint 3: tests base + CI.
+3. Agregar observabilidad mínima y error boundary global.
