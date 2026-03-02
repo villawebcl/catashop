@@ -14,6 +14,7 @@
     "test": "node -e \"require('fs').rmSync('.tmp-tests',{recursive:true,force:true})\" && tsc -p tsconfig.test.json && node --test .tmp-tests/tests/**/*.test.js",
     "e2e": "playwright test",
     "e2e:staging": "playwright test e2e/staging-real.spec.ts --project=chromium",
+    "e2e:production": "playwright test e2e/staging-real.spec.ts --project=chromium",
     "e2e:headed": "playwright test --headed",
     "e2e:install": "playwright install chromium",
     "check": "npm run lint && npm run typecheck && npm run build"

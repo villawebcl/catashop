@@ -28,7 +28,7 @@
 1. Activar primero en staging con `CSP_ENFORCE_NONCE=true`.
 2. Ejecutar workflow `E2E Staging` con input `expect_nonce_csp=true`.
 3. Validar home, productos, carrito, admin, checkout y popup WhatsApp.
-4. Si todo pasa, activar en producción.
+4. Si todo pasa, activar en producción y ejecutar `E2E Production`.
 
 ### Rollback inmediato
 1. Cambiar `CSP_ENFORCE_NONCE=false`.
@@ -44,3 +44,9 @@
 - Requiere secret `STAGING_BASE_URL`.
 - Ejecuta smoke browser sin mocks contra staging.
 - Input opcional `expect_nonce_csp=true` valida header CSP en modo nonce estricto.
+
+### Produccion real (manual)
+- Workflow: `.github/workflows/e2e-production.yml`.
+- Requiere secret `PRODUCTION_BASE_URL` (ejemplo: `https://catashop.cl` o dominio canonico productivo).
+- Ejecuta smoke browser sin mocks contra produccion.
+- Input por defecto `expect_nonce_csp=true` valida header CSP en modo nonce estricto.

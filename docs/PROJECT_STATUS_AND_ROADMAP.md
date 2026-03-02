@@ -88,6 +88,6 @@
   - El panel admin dejó de hacer descuento de stock en loop desde cliente.
 
 ## Próximos pasos inmediatos
-1. Ejecutar rollout real de `CSP_ENFORCE_NONCE=true` primero en staging y luego producción.
+1. Ejecutar `E2E Production` con validacion nonce (`expect_nonce_csp=true`) y dejar evidencia de release.
 2. Conectar webhook de observabilidad a herramienta de alertas (Slack/PagerDuty/Email).
-3. Expandir e2e staging para incluir checkout real controlado (dataset aislado).
+3. Expandir e2e real para incluir checkout controlado con dataset aislado de pruebas.

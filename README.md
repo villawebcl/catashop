@@ -79,6 +79,8 @@ npm run dev
 - `npm run format`: autocorrección con ESLint
 - `npm run test`: tests unitarios base (Node test runner + TypeScript)
 - `npm run e2e`: smoke e2e (Playwright)
+- `npm run e2e:staging`: smoke real contra URL configurada en `STAGING_BASE_URL`
+- `npm run e2e:production`: smoke real contra URL configurada en `STAGING_BASE_URL` (usado por workflow de produccion)
 - `npm run e2e:headed`: smoke e2e en modo visible
 - `npm run e2e:install`: instala browser Chromium para Playwright
 - `npm run build`: build de producción
@@ -92,6 +94,8 @@ npm run dev
   - typecheck
   - build
   - smoke e2e Playwright (`chromium`)
+- Workflow manual staging: `.github/workflows/e2e-staging.yml` (secret `STAGING_BASE_URL`).
+- Workflow manual produccion: `.github/workflows/e2e-production.yml` (secret `PRODUCTION_BASE_URL`).
 
 ## Seguridad de pedidos
 
