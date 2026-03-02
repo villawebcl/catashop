@@ -8,7 +8,7 @@ test.describe("staging real smoke", () => {
     await expect(page.getByRole("heading", { name: "Todo lo esencial para tu día a día" })).toBeVisible();
 
     await page.goto("/productos");
-    await expect(page.getByText("Productos", { exact: false })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Colección completa" })).toBeVisible();
 
     await page.goto("/carrito");
     await expect(page.getByRole("heading", { name: "Tu selección" })).toBeVisible();
