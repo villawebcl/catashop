@@ -67,6 +67,8 @@
   - CI ahora ejecuta `npm run test` además de lint/typecheck/build.
 - `test: add checkout smoke for wa.me flow`
   - Se agregó smoke test del armado de URL de checkout por WhatsApp.
+- `test(e2e): add Playwright smoke for admin login and sold flow`
+  - Se agregó cobertura browser del panel admin con marcado de orden vendida.
 - `ops: add centralized logger with basic redaction`
   - Se reemplazaron errores críticos por `logger` para trazabilidad consistente.
 - `ops: add observability ingest endpoint and webhook forwarding`
@@ -79,6 +81,6 @@
   - El panel admin dejó de hacer descuento de stock en loop desde cliente.
 
 ## Próximos pasos inmediatos
-1. Endurecer CSP removiendo `unsafe-inline`/`unsafe-eval` gradualmente.
-2. Expandir smoke e2e en navegador real (Playwright) cuando se habilite dependencia.
-3. Añadir alertas operativas (por volumen de errores) en el webhook/sink elegido.
+1. Endurecer CSP retirando `unsafe-inline` con estrategia nonce/hash.
+2. Añadir alertas operativas (por volumen de errores) en el webhook/sink elegido.
+3. Agregar e2e con datos reales de staging (sin mocks) para flujo completo.

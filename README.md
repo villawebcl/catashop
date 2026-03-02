@@ -102,6 +102,9 @@ npm run dev
   - actualización atómica de stock + estado de orden.
 - El insert directo público en `orders` quedó deshabilitado por RLS.
 - Existe smoke test del flujo de checkout hacia `wa.me` en `tests/checkout-smoke.test.ts`.
+- E2E Playwright incluye:
+  - checkout -> popup WhatsApp;
+  - admin login + marcado de orden vendida (RPC mockeada).
 
 ## Logging
 
