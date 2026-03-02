@@ -1,5 +1,26 @@
 create extension if not exists "pgcrypto";
 
+create table if not exists public.admin_users (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  created_at timestamptz default now()
+);
+
+alter table public.admin_users enable row level security;
+
+create or replace function public.is_admin()
+returns boolean
+language sql
+stable
+as $$
+  select exists (
+    select 1
+    from public.admin_users
+    where user_id = auth.uid()
+  );
+$$;
+
+grant execute on function public.is_admin() to authenticated, anon;
+
 create table if not exists public.products (
   id uuid primary key default gen_random_uuid(),
   readable_id text,
@@ -25,17 +46,17 @@ using (true);
 create policy "Admin insert products"
 on public.products
 for insert
-with check (auth.role() = 'authenticated');
+with check (public.is_admin());
 
 create policy "Admin update products"
 on public.products
 for update
-using (auth.role() = 'authenticated');
+using (public.is_admin());
 
 create policy "Admin delete products"
 on public.products
 for delete
-using (auth.role() = 'authenticated');
+using (public.is_admin());
 
 create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),
@@ -57,12 +78,17 @@ with check (true);
 create policy "Admin read orders"
 on public.orders
 for select
-using (auth.role() = 'authenticated');
+using (public.is_admin());
 
 create policy "Admin update orders"
 on public.orders
 for update
-using (auth.role() = 'authenticated');
+using (public.is_admin());
+
+create policy "Admin delete orders"
+on public.orders
+for delete
+using (public.is_admin());
 
 insert into storage.buckets (id, name, public)
 values ('products', 'products', true)

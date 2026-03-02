@@ -13,6 +13,13 @@ E-commerce minimalista con compra por WhatsApp, variedad de productos y gestión
 2. Ejecuta el script `supabase/schema.sql` en el SQL Editor.
 3. Verifica que exista el bucket `products` y que sea público.
 4. Crea un usuario administrador (Auth → Users) para acceder al panel `/admin`.
+5. Marca ese usuario como admin ejecutando en SQL Editor:
+
+```
+insert into public.admin_users (user_id)
+values ('<UUID_DEL_USUARIO_AUTH>')
+on conflict (user_id) do nothing;
+```
 
 ## Variables de entorno
 
