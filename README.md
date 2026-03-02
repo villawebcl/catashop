@@ -115,6 +115,13 @@ npm run dev
 
 - Las políticas de `storage.objects` del bucket `products` ahora usan `public.is_admin()` para upload/update/delete.
 
+## CSP hardening
+
+- `script-src` ya no permite `unsafe-eval` ni `unsafe-inline`.
+- Si en despliegue detectas bloqueo de scripts por CSP, rollback inmediato:
+  - restaura temporalmente `'unsafe-inline'` en `script-src` de `next.config.ts`;
+  - despliega y revisa violaciones antes de reaplicar endurecimiento.
+
 ## Notas
 
 - El número de WhatsApp configurado está en `src/app/carrito/page.tsx`.

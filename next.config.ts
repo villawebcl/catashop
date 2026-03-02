@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       "img-src 'self' data: https:",
       "font-src 'self' data: https://fonts.gstatic.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "script-src 'self' 'unsafe-inline'",
+      "script-src 'self'",
       `connect-src 'self' https://${supabaseHost ?? "*.supabase.co"} https://*.supabase.co wss://*.supabase.co`,
       "form-action 'self' https://wa.me",
       "upgrade-insecure-requests",
