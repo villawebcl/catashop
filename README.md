@@ -28,6 +28,20 @@ Si ya tenías el proyecto corriendo antes de estos cambios de seguridad, aplica 
 supabase/policies.sql
 ```
 
+## Seed de productos ficticios (QA)
+
+Para poblar catálogo rápidamente con datos de prueba, ejecuta en SQL Editor:
+
+```
+-- Ejecuta el contenido de:
+supabase/seed_products.sql
+```
+
+Este seed:
+- inserta 12 productos ficticios;
+- usa `code` con prefijo `SEED-`;
+- es idempotente (borra e inserta solo registros `SEED-*`).
+
 ## Variables de entorno
 
 Crea un archivo `.env.local` con:
