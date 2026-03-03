@@ -6,14 +6,14 @@ test.describe("staging real smoke", () => {
   test("home, products and cart load without blocking errors", async ({ page }) => {
     const homeResponse = await page.goto("/");
     expect(homeResponse).not.toBeNull();
-    const homeHeaders = (await homeResponse?.allHeaders?.()) ?? homeResponse?.headers() ?? {};
+    const homeHeaders = homeResponse?.headers() ?? {};
     let cspHeader = homeHeaders["content-security-policy"] ?? "";
     let nonceHeader = homeHeaders["x-nonce"] ?? "";
 
     if (!cspHeader || !nonceHeader) {
       const absoluteUrl = process.env.STAGING_BASE_URL ?? "/";
       const fallbackResponse = await page.request.get(absoluteUrl);
-      const fallbackHeaders = (await fallbackResponse.allHeaders()) ?? fallbackResponse.headers();
+      const fallbackHeaders = fallbackResponse.headers();
       cspHeader = cspHeader || fallbackHeaders["content-security-policy"] || "";
       nonceHeader = nonceHeader || fallbackHeaders["x-nonce"] || "";
     }
