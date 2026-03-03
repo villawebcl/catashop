@@ -34,7 +34,27 @@ export default function FAQPage() {
         {
             question: "¿Qué pasa si un producto no me gusta?",
             answer:
-                "Queremos que ames lo que compras. Si tienes algún problema, escríbenos por WhatsApp y buscaremos la mejor solución. Aceptamos cambios por fallas de fábrica dentro de los primeros 10 días.",
+                "Por políticas comerciales, no realizamos cambios ni devoluciones por gusto personal o error de compra del cliente (por ejemplo: color, talla, modelo o compatibilidad elegida por el cliente). Si tienes dudas antes de comprar, te asesoramos por WhatsApp para evitar errores.",
+        },
+        {
+            question: "¿Cuál es la política de cambios por falla o producto defectuoso?",
+            answer:
+                "Si el producto presenta falla de fabricación, puedes solicitar revisión dentro de los primeros 10 días corridos desde la recepción. Evaluaremos el caso y, si corresponde, gestionaremos cambio, reparación o devolución según disponibilidad y la normativa aplicable.",
+        },
+        {
+            question: "¿En qué condiciones se acepta un cambio o revisión?",
+            answer:
+                "El producto debe venir completo, sin intervención de terceros, sin daños por mal uso, con accesorios y empaque original cuando aplique. No cubre daños por instalación incorrecta, golpes, humedad, uso fuera de especificación o desgaste normal.",
+        },
+        {
+            question: "¿Cómo se gestionan envíos en cambios o garantías?",
+            answer:
+                "Cuando se confirma falla atribuible al producto, Catashop asume el costo logístico razonable de reposición. Si la revisión descarta falla de fabricación o se detecta mal uso, el costo de envío/reenvío es del cliente.",
+        },
+        {
+            question: "¿Cómo solicitar un cambio o garantía?",
+            answer:
+                "Escríbenos por WhatsApp con número de pedido, fotos/videos del problema y una breve descripción. Te responderemos con los pasos y plazos de resolución. La atención se realiza por orden de ingreso y en horario hábil.",
         },
     ];
 
@@ -55,6 +75,9 @@ export default function FAQPage() {
                         <FAQItem key={index} faq={faq} />
                     ))}
                 </div>
+                <p className="mt-8 text-center text-xs text-[var(--muted)]">
+                    Política resumida. Ante cualquier caso, aplica además la normativa vigente y las condiciones informadas al confirmar el pedido por WhatsApp.
+                </p>
             </div>
         </section>
     );
