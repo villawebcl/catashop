@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/siteUrl";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = "https://catashop.cl";
+    const baseUrl = getSiteUrl();
     return [
         {
             url: baseUrl,
@@ -20,12 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: new Date(),
             changeFrequency: "daily",
             priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/galeria`,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.5,
         },
         {
             url: `${baseUrl}/faq`,
