@@ -149,6 +149,8 @@ npm run dev
 
 ## Estado y roadmap técnico
 
+- Contexto funcional/técnico de la app: `docs/APP_CONTEXT.md`.
+- Estado para retomar trabajo rápido: `docs/WORK_CONTINUITY.md`.
 - Revisa `docs/PROJECT_STATUS_AND_ROADMAP.md` para el estado actual, riesgos y plan de mejora por sprints.
 - Runbook operativo: `docs/OPERATIONS_RUNBOOK.md`.
 - Checklist de release: `docs/RELEASE_CHECKLIST.md`.
