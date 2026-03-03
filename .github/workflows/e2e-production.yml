@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       expect_nonce_csp:
-        description: "Validar CSP strict nonce en produccion"
+        description: "Validar rollout nonce CSP (enforce o report-only) en produccion"
         type: boolean
         required: true
         default: true

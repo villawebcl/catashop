@@ -30,13 +30,14 @@
 
 ### Variables
 - `CSP_ENFORCE_NONCE=false` (por defecto): modo compatible (`script-src 'unsafe-inline'`).
-- `CSP_ENFORCE_NONCE=true`: activa política nonce en `script-src`.
+- `CSP_ENFORCE_NONCE=true`: activa política nonce en `Content-Security-Policy-Report-Only` (rollout seguro).
 
 ### Procedimiento recomendado
 1. Activar primero en staging con `CSP_ENFORCE_NONCE=true`.
 2. Ejecutar workflow `E2E Staging` con input `expect_nonce_csp=true`.
 3. Validar home, productos, carrito, admin, checkout y popup WhatsApp.
-4. Si todo pasa, activar en producción y ejecutar `E2E Production`.
+4. Verificar en headers que exista `content-security-policy-report-only` con `script-src 'self' 'nonce-...`.
+5. Si todo pasa, activar en producción y ejecutar `E2E Production`.
 
 ### Rollback inmediato
 1. Cambiar `CSP_ENFORCE_NONCE=false`.
@@ -52,6 +53,7 @@
 - Requiere secret `STAGING_BASE_URL`.
 - Ejecuta smoke browser sin mocks contra staging.
 - Input opcional `expect_nonce_csp=true` valida header CSP en modo nonce estricto.
+- Input opcional `expect_nonce_csp=true` valida presencia de nonce en headers CSP/Report-Only.
 
 ### Checkout real no destructivo (manual)
 - Workflow: `.github/workflows/e2e-checkout-real.yml`.
@@ -63,4 +65,5 @@
 - Requiere secret `PRODUCTION_BASE_URL` (ejemplo: `https://catashop.cl` o dominio canonico productivo).
 - Ejecuta smoke browser sin mocks contra produccion.
 - Input por defecto `expect_nonce_csp=true` valida header CSP en modo nonce estricto.
+- Input por defecto `expect_nonce_csp=true` valida presencia de nonce en headers CSP/Report-Only.
 - Nota: en algunos runners/edges, ciertos headers pueden no estar expuestos al test. En ese caso se valida nonce por señal disponible y se recomienda confirmacion manual en navegador (`Network -> / -> content-security-policy`).

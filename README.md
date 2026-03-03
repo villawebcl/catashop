@@ -138,7 +138,7 @@ npm run dev
 
 - `script-src` no permite `unsafe-eval`.
 - `unsafe-inline` se mantiene habilitado por compatibilidad con runtime de Next.js.
-- Ya existe estrategia nonce por middleware con rollout controlado por `CSP_ENFORCE_NONCE`.
+- `CSP_ENFORCE_NONCE=true` activa rollout seguro: nonce en `Content-Security-Policy-Report-Only` para validar sin romper runtime.
 
 ## Notas
 

@@ -9,13 +9,15 @@ test.describe("staging real smoke", () => {
     expect(homeResponse).not.toBeNull();
     const homeHeaders = homeResponse?.headers() ?? {};
     let cspHeader = homeHeaders["content-security-policy"] ?? "";
+    let cspReportOnlyHeader = homeHeaders["content-security-policy-report-only"] ?? "";
     let nonceHeader = homeHeaders["x-nonce"] ?? "";
 
-    if (!cspHeader || !nonceHeader) {
+    if (!cspHeader || !nonceHeader || !cspReportOnlyHeader) {
       const absoluteUrl = process.env.STAGING_BASE_URL ?? "/";
       const fallbackResponse = await page.request.get(absoluteUrl);
       const fallbackHeaders = fallbackResponse.headers();
       cspHeader = cspHeader || fallbackHeaders["content-security-policy"] || "";
+      cspReportOnlyHeader = cspReportOnlyHeader || fallbackHeaders["content-security-policy-report-only"] || "";
       nonceHeader = nonceHeader || fallbackHeaders["x-nonce"] || "";
     }
     if (cspHeader) {
@@ -26,6 +28,7 @@ test.describe("staging real smoke", () => {
 
     if (process.env.STAGING_EXPECT_NONCE_CSP === "true") {
       const hasNonceInCsp = cspHeader.includes("script-src 'self' 'nonce-");
+      const hasNonceInReportOnly = cspReportOnlyHeader.includes("script-src 'self' 'nonce-");
 
       if (hasNonceInCsp) {
         const scriptDirective = cspHeader
@@ -34,6 +37,8 @@ test.describe("staging real smoke", () => {
           .find((part) => part.startsWith("script-src"));
         expect(scriptDirective).toBeDefined();
         expect(scriptDirective).not.toContain("'unsafe-inline'");
+      } else if (hasNonceInReportOnly) {
+        expect(cspReportOnlyHeader).toContain("default-src 'self'");
       } else if (nonceHeader) {
         expect(nonceHeader).toBeTruthy();
       } else if (requireCspHeader) {

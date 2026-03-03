@@ -3,7 +3,7 @@
 ## Pre-release
 1. Confirmar `main` en verde: `CI`, `E2E Staging`, `E2E Production`.
 2. Verificar variables:
-   - `CSP_ENFORCE_NONCE=true` en entorno objetivo.
+   - `CSP_ENFORCE_NONCE=true` en entorno objetivo (rollout Report-Only).
    - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
    - `OBSERVABILITY_WEBHOOK_URL` y `OBS_ALERT_THRESHOLD`.
 3. Ejecutar smoke real no destructivo:
