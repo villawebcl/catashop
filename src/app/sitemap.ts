@@ -1,9 +1,11 @@
 import { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/siteUrl";
+import { buildProductPath } from "@/lib/productSeo";
+import { getPublicProducts } from "@/lib/products";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = getSiteUrl();
-    return [
+    const staticUrls: MetadataRoute.Sitemap = [
         {
             url: baseUrl,
             lastModified: new Date(),
@@ -29,4 +31,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.5,
         },
     ];
+
+    const products = await getPublicProducts();
+    const productUrls: MetadataRoute.Sitemap = products.map((product) => ({
+        url: `${baseUrl}${buildProductPath(product)}`,
+        lastModified: product.created_at ? new Date(product.created_at) : new Date(),
+        changeFrequency: "weekly",
+        priority: 0.7,
+    }));
+
+    return [...staticUrls, ...productUrls];
 }

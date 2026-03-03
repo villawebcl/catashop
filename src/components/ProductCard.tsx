@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import type { Product } from "@/lib/types";
 import { formatCLP } from "@/lib/format";
 import { useCart } from "@/components/CartContext";
 import { canUseOptimizedImage } from "@/lib/image";
+import { buildProductPath } from "@/lib/productSeo";
 
 type ProductCardProps = {
   product: Product;
@@ -19,6 +21,7 @@ export default function ProductCard({
   enableMotion = true,
 }: ProductCardProps) {
   const { addItem } = useCart();
+  const productPath = buildProductPath(product);
 
   const content = (
     <>
@@ -64,6 +67,13 @@ export default function ProductCard({
         {product.detail && (
           <p className="text-sm leading-relaxed text-[var(--muted)]">{product.detail}</p>
         )}
+        <Link
+          href={productPath}
+          onClick={(event) => event.stopPropagation()}
+          className="text-sm text-[var(--accent)] hover:text-[var(--accent-strong)]"
+        >
+          Ver detalle
+        </Link>
         <motion.button
           type="button"
           whileTap={{ scale: 0.98 }}

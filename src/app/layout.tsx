@@ -37,11 +37,20 @@ export const metadata: Metadata = {
     siteName: "Catashop",
     locale: "es_CL",
     type: "website",
+    images: [
+      {
+        url: `${siteUrl}/icon-512.png`,
+        width: 512,
+        height: 512,
+        alt: "Catashop",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Catashop - Tienda de Variedad",
     description: "Variedad práctica y bonita en un solo lugar. Coordinamos pago y entrega por WhatsApp en minutos.",
+    images: [`${siteUrl}/icon-512.png`],
   },
   icons: {
     icon: [
@@ -59,9 +68,39 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Catashop",
+    url: siteUrl,
+    logo: `${siteUrl}/icon-512.png`,
+    sameAs: ["https://wa.me/56973283737"],
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Catashop",
+    url: siteUrl,
+    inLanguage: "es-CL",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/productos?buscar={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <html lang="es">
       <body className={`${displayFont.variable} ${bodyFont.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <CartProvider>
           <div className="page-shell">
             <Header />
