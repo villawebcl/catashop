@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import SearchableProductGrid from "@/components/SearchableProductGrid";
+
+export const metadata: Metadata = {
+  title: "Productos",
+  description: "Explora la colección completa de Catashop con stock actualizado y compra coordinada por WhatsApp.",
+  alternates: {
+    canonical: "/productos",
+  },
+};
 
 export default function ProductosPage() {
   return (

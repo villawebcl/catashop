@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import ProductGrid from "@/components/ProductGrid";
+
+export const metadata: Metadata = {
+  title: "Ofertas",
+  description: "Promociones de Catashop con precios especiales y coordinación de compra por WhatsApp.",
+  alternates: {
+    canonical: "/ofertas",
+  },
+};
 
 export default function OfertasPage() {
   return (

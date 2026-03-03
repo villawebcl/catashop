@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useDeferredValue, useState } from "react";
 import ProductGrid from "@/components/ProductGrid";
 
 type SearchableProductGridProps = {
@@ -15,6 +15,7 @@ export default function SearchableProductGrid({
   description,
 }: SearchableProductGridProps) {
   const [searchTerm, setSearchTerm] = useState("");
+  const deferredSearchTerm = useDeferredValue(searchTerm);
 
   return (
     <div>
@@ -36,7 +37,7 @@ export default function SearchableProductGrid({
         />
       </div>
       <div className="mt-10">
-        <ProductGrid mode={mode} searchTerm={searchTerm} />
+        <ProductGrid mode={mode} searchTerm={deferredSearchTerm} />
       </div>
     </div>
   );
