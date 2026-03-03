@@ -15,6 +15,7 @@ import { canUseOptimizedImage } from "@/lib/image";
 import { createWhatsAppCheckoutUrl } from "@/lib/whatsappCheckout";
 import { logger } from "@/lib/logger";
 import { WHATSAPP_PHONE } from "@/lib/contact";
+import { clearCheckoutDraft } from "@/lib/checkoutDraft";
 
 export default function CarritoPage() {
   const { items, total, updateQuantity, removeItem, clear } = useCart();
@@ -114,6 +115,7 @@ export default function CarritoPage() {
       orderId,
     );
 
+    clearCheckoutDraft();
     clear();
     const opened = window.open(url, "_blank", "noopener,noreferrer");
     if (!opened) {

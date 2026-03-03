@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { CustomerDetails } from "@/lib/types";
 import {
@@ -6,6 +6,7 @@ import {
     SHIPPING_AGENCIES,
     validateCustomerDetails,
 } from "@/lib/checkout";
+import { loadCheckoutDraft, saveCheckoutDraft } from "@/lib/checkoutDraft";
 
 type CheckoutFormProps = {
     onSubmit: (data: CustomerDetails) => void;
@@ -27,6 +28,22 @@ export default function CheckoutForm({
         agency: SHIPPING_AGENCIES[0],
     });
     const [submitError, setSubmitError] = useState<string | null>(null);
+    const loadedDraftRef = useRef(false);
+
+    /* eslint-disable react-hooks/set-state-in-effect */
+    useEffect(() => {
+        const draft = loadCheckoutDraft();
+        if (draft) {
+            setFormData(draft);
+        }
+        loadedDraftRef.current = true;
+    }, []);
+    /* eslint-enable react-hooks/set-state-in-effect */
+
+    useEffect(() => {
+        if (!loadedDraftRef.current) return;
+        saveCheckoutDraft(formData);
+    }, [formData]);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
