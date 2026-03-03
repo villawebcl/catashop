@@ -5,7 +5,7 @@ import type { Product } from "@/lib/types";
 import ProductCard from "@/components/ProductCard";
 import { supabase } from "@/lib/supabase/client";
 import ProductModal from "@/components/ProductModal";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 type ProductGridProps = {
   mode?: "all" | "featured" | "offers";
@@ -16,6 +16,7 @@ export default function ProductGrid({
   mode = "all",
   searchTerm = "",
 }: ProductGridProps) {
+  const prefersReducedMotion = useReducedMotion();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -100,6 +101,9 @@ export default function ProductGrid({
     );
   }, [products, searchTerm]);
 
+  const shouldAnimateCards =
+    !prefersReducedMotion && filteredProducts.length > 0 && filteredProducts.length <= 18;
+
   const content = useMemo(() => {
     if (loading) {
       return (
@@ -122,18 +126,18 @@ export default function ProductGrid({
         </div>
       );
     }
-    return (
-      <AnimatePresence mode="popLayout">
-        {filteredProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onView={(item) => setSelectedProduct(item)}
-          />
-        ))}
-      </AnimatePresence>
-    );
-  }, [loading, error, filteredProducts]);
+    const cards = filteredProducts.map((product) => (
+      <ProductCard
+        key={product.id}
+        product={product}
+        enableMotion={shouldAnimateCards}
+        onView={(item) => setSelectedProduct(item)}
+      />
+    ));
+
+    if (!shouldAnimateCards) return cards;
+    return <AnimatePresence mode="popLayout">{cards}</AnimatePresence>;
+  }, [loading, error, filteredProducts, shouldAnimateCards]);
 
   return (
     <>

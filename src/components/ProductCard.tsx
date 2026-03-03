@@ -10,28 +10,18 @@ import { canUseOptimizedImage } from "@/lib/image";
 type ProductCardProps = {
   product: Product;
   onView: (product: Product) => void;
+  enableMotion?: boolean;
 };
 
-export default function ProductCard({ product, onView }: ProductCardProps) {
+export default function ProductCard({
+  product,
+  onView,
+  enableMotion = true,
+}: ProductCardProps) {
   const { addItem } = useCart();
 
-  return (
-    <motion.article
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--surface)] shadow-sm transition-shadow hover:shadow-md"
-      onClick={() => onView(product)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          onView(product);
-        }
-      }}
-    >
+  const content = (
+    <>
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--sand)]">
         {product.image_url ? (
           canUseOptimizedImage(product.image_url) ? (
@@ -86,6 +76,46 @@ export default function ProductCard({ product, onView }: ProductCardProps) {
           Agregar al Carrito
         </motion.button>
       </div>
+    </>
+  );
+
+  if (!enableMotion) {
+    return (
+      <article
+        className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--surface)] shadow-sm transition-shadow hover:shadow-md"
+        onClick={() => onView(product)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            onView(product);
+          }
+        }}
+      >
+        {content}
+      </article>
+    );
+  }
+
+  return (
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--surface)] shadow-sm transition-shadow hover:shadow-md"
+      onClick={() => onView(product)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onView(product);
+        }
+      }}
+    >
+      {content}
     </motion.article>
   );
 }
