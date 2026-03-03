@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "format": "eslint . --fix",
-    "test": "node -e \"require('fs').rmSync('.tmp-tests',{recursive:true,force:true})\" && tsc -p tsconfig.test.json && node --test .tmp-tests/tests/**/*.test.js",
+    "test": "node -e \"require('fs').rmSync('.tmp-tests',{recursive:true,force:true})\" && tsc -p tsconfig.test.json && node scripts/run-node-tests.mjs .tmp-tests/tests",
     "e2e": "playwright test",
     "e2e:staging": "playwright test e2e/staging-real.spec.ts --project=chromium",
     "e2e:production": "playwright test e2e/staging-real.spec.ts --project=chromium",
