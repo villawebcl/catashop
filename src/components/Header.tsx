@@ -27,7 +27,7 @@ export default function Header() {
             Shop
           </span>
         </Link>
-        <nav className="hidden items-center gap-8 text-sm uppercase tracking-[0.15em] text-[var(--muted)] md:flex">
+        <nav className="hidden items-center gap-8 text-sm text-[var(--muted)] md:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -41,7 +41,7 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <Link
             href="/carrito"
-            className="relative hidden md:flex items-center rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.2em] text-[var(--ink)] transition-colors duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            className="relative hidden md:flex items-center rounded-full border border-[var(--line)] px-4 py-2 text-xs text-[var(--ink)] transition-colors duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
           >
             Carrito
             {count > 0 && (
@@ -53,6 +53,7 @@ export default function Header() {
           <Link
             href="/carrito"
             className="relative flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] text-[11px] text-[var(--ink)] md:hidden"
+            aria-label="Abrir carrito"
           >
             🛒
             {count > 0 && (
@@ -76,7 +77,7 @@ export default function Header() {
         className={`overflow-hidden border-t border-[var(--line)] bg-[var(--surface)] transition-all duration-300 ease-out md:hidden ${open ? "max-h-[360px] opacity-100" : "max-h-0 opacity-0"
           }`}
       >
-        <nav className="px-6 py-6 text-sm uppercase tracking-[0.2em] text-[var(--muted)]">
+        <nav className="px-6 py-6 text-sm text-[var(--muted)]">
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
               <Link

@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeferredValue, useState } from "react";
+import { useDeferredValue, useId, useState } from "react";
 import ProductGrid from "@/components/ProductGrid";
 
 type SearchableProductGridProps = {
@@ -16,6 +16,7 @@ export default function SearchableProductGrid({
 }: SearchableProductGridProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const deferredSearchTerm = useDeferredValue(searchTerm);
+  const searchId = useId();
 
   return (
     <div>
@@ -28,13 +29,19 @@ export default function SearchableProductGrid({
             <p className="mt-2 text-sm text-[var(--muted)]">{description}</p>
           )}
         </div>
-        <input
-          type="text"
-          placeholder="Buscar productos"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-          className="w-full rounded-full border border-[var(--line)] bg-transparent px-5 py-3 text-sm md:w-72"
-        />
+        <div className="w-full md:w-72">
+          <label htmlFor={searchId} className="sr-only">
+            Buscar productos por nombre, categoría o detalle
+          </label>
+          <input
+            id={searchId}
+            type="text"
+            placeholder="Buscar productos"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            className="w-full rounded-full border border-[var(--line)] bg-transparent px-5 py-3 text-sm"
+          />
+        </div>
       </div>
       <div className="mt-10">
         <ProductGrid mode={mode} searchTerm={deferredSearchTerm} />

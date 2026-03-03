@@ -1,6 +1,6 @@
 import Link from "next/link";
-import ProductGrid from "@/components/ProductGrid";
 import SearchableProductGrid from "@/components/SearchableProductGrid";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 export default function Home() {
   return (
@@ -20,8 +20,8 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <a
-                href="https://wa.me/56973283737"
-                className="rounded-lg bg-[var(--accent)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.1em] text-white shadow-sm transition-colors duration-300 hover:bg-[var(--accent-strong)]"
+                href={WHATSAPP_URL}
+                className="rounded-lg bg-[var(--accent)] px-8 py-4 text-sm font-semibold text-white shadow-sm transition-colors duration-300 hover:bg-[var(--accent-strong)]"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -29,7 +29,7 @@ export default function Home() {
               </a>
               <Link
                 href="/productos"
-                className="rounded-lg border-2 border-[var(--line)] px-8 py-4 text-sm font-medium uppercase tracking-[0.1em] text-[var(--ink)] transition-colors duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                className="rounded-lg border-2 border-[var(--line)] px-8 py-4 text-sm font-medium text-[var(--ink)] transition-colors duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
               >
                 Ver Productos
               </Link>
@@ -58,33 +58,9 @@ export default function Home() {
         <div className="mx-auto w-full max-w-6xl">
           <SearchableProductGrid
             mode="all"
-            title="Todos los productos"
+            title="Colección"
             description="Encuentra lo que necesitas y coordina tu compra por WhatsApp."
           />
-        </div>
-      </section>
-
-      <section className="section px-6 sm:px-10">
-        <div className="mx-auto w-full max-w-6xl">
-          <div className="flex flex-wrap items-center justify-between gap-6">
-            <div>
-              <p className="text-xs uppercase tracking-[0.1em] text-[var(--muted)]">
-                Destacados
-              </p>
-              <h2 className="font-[var(--font-display)] text-3xl text-[var(--ink)] md:text-4xl">
-                Lo más solicitado
-              </h2>
-            </div>
-            <Link
-              href="/productos"
-              className="text-sm font-medium uppercase tracking-[0.1em] text-[var(--accent)] hover:text-[var(--accent-strong)]"
-            >
-              Ver todo →
-            </Link>
-          </div>
-          <div className="mt-10">
-            <ProductGrid mode="featured" />
-          </div>
         </div>
       </section>
 

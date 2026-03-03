@@ -14,8 +14,7 @@ import { getOrCreateCheckoutClientKey, toCheckoutItemPayload } from "@/lib/order
 import { canUseOptimizedImage } from "@/lib/image";
 import { createWhatsAppCheckoutUrl } from "@/lib/whatsappCheckout";
 import { logger } from "@/lib/logger";
-
-const vendorPhone = "+56932422471";
+import { WHATSAPP_PHONE } from "@/lib/contact";
 
 export default function CarritoPage() {
   const { items, total, updateQuantity, removeItem, clear } = useCart();
@@ -108,7 +107,7 @@ export default function CarritoPage() {
     }
 
     const url = createWhatsAppCheckoutUrl(
-      vendorPhone,
+      WHATSAPP_PHONE,
       finalItems,
       finalTotal,
       cleanCustomer,

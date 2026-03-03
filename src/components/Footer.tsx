@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 export default function Footer() {
   return (
@@ -13,7 +14,7 @@ export default function Footer() {
             entregas coordinadas por WhatsApp.
           </p>
         </div>
-        <div className="text-xs uppercase tracking-[0.3em] flex flex-col md:flex-row gap-4 md:gap-8">
+        <div className="text-xs flex flex-col md:flex-row gap-4 md:gap-8">
           <Link href="/faq" className="hover:text-[var(--accent-strong)] transition-colors">
             Preguntas Frecuentes
           </Link>
@@ -21,10 +22,10 @@ export default function Footer() {
         </div>
       </div>
       <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-4 px-6 pb-10 text-xs text-[var(--muted)] md:flex-row md:items-center md:justify-between">
-        <span>Contacto: +56 9 7328 3737 · contacto@catashop.cl</span>
+        <span>Contacto por WhatsApp · contacto@catashop.cl</span>
         <a
-          href="https://wa.me/56973283737"
-          className="rounded-full border border-[var(--line)] px-4 py-2 text-[10px] uppercase tracking-[0.3em] text-[var(--ink)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent-strong)]"
+          href={WHATSAPP_URL}
+          className="rounded-full border border-[var(--line)] px-4 py-2 text-[10px] text-[var(--ink)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent-strong)]"
           target="_blank"
           rel="noopener noreferrer"
         >

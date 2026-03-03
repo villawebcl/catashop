@@ -111,31 +111,41 @@ export default function AdminPage() {
       <section className="min-h-screen flex items-center justify-center p-6 bg-[var(--bg)]">
         <div className="w-full max-w-md bg-[var(--surface)] border border-[var(--line)] rounded-lg p-10 shadow-sm">
           <div className="text-center mb-8">
-            <p className="text-xs uppercase tracking-[0.15em] text-[var(--muted)] mb-3">Catashop</p>
+            <p className="text-xs tracking-[0.08em] text-[var(--muted)] mb-3">Catashop</p>
             <h1 className="font-[var(--font-display)] text-3xl text-[var(--ink)]">Admin</h1>
           </div>
 
           <form className="flex flex-col gap-5" onSubmit={signIn}>
+            <label htmlFor="admin-email" className="text-xs text-[var(--muted)]">
+              Email
+            </label>
             <input
+              id="admin-email"
               type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
               className="w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink)] outline-none focus:border-[var(--accent)] transition-all"
             />
+            <label htmlFor="admin-password" className="text-xs text-[var(--muted)]">
+              Contraseña
+            </label>
             <input
+              id="admin-password"
               type="password"
               placeholder="Contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
               className="w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink)] outline-none focus:border-[var(--accent)] transition-all"
             />
             {authError && (
-              <p className="text-xs uppercase tracking-[0.1em] text-red-600 text-center">{authError}</p>
+              <p className="text-xs text-red-600 text-center">{authError}</p>
             )}
             <button
               type="submit"
-              className="w-full bg-[var(--accent)] text-white rounded-lg py-4 text-sm font-medium uppercase tracking-[0.1em] hover:bg-[var(--accent-strong)] transition-colors"
+              className="w-full bg-[var(--accent)] text-white rounded-lg py-4 text-sm font-medium hover:bg-[var(--accent-strong)] transition-colors"
             >
               Entrar
             </button>
@@ -151,7 +161,7 @@ export default function AdminPage() {
       <header className="sticky top-0 z-30 bg-[var(--surface)] border-b border-[var(--line)] px-6 py-4">
         <div className="mx-auto max-w-7xl flex items-center justify-between">
           <span className="font-[var(--font-display)] text-xl text-[var(--ink)]">Panel de Control</span>
-          <button onClick={signOut} className="flex items-center gap-2 text-xs uppercase tracking-[0.1em] text-red-500 hover:text-red-700">
+          <button onClick={signOut} className="flex items-center gap-2 text-xs text-red-500 hover:text-red-700">
             <LogOut size={16} />
             <span className="hidden sm:inline">Salir</span>
           </button>
@@ -163,21 +173,21 @@ export default function AdminPage() {
         <div className="flex overflow-x-auto gap-3 mb-10 pb-2 border-b border-[var(--line)]">
           <button
             onClick={() => setActiveTab("dashboard")}
-            className={`flex items-center gap-2 px-6 py-3 rounded-lg text-sm uppercase tracking-[0.1em] font-medium transition-all ${activeTab === "dashboard" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:bg-[var(--sand)]"}`}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium transition-all ${activeTab === "dashboard" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:bg-[var(--sand)]"}`}
           >
             <LayoutDashboard size={16} />
             <span>Dashboard</span>
           </button>
           <button
             onClick={() => setActiveTab("products")}
-            className={`flex items-center gap-2 px-6 py-3 rounded-lg text-sm uppercase tracking-[0.1em] font-medium transition-all ${activeTab === "products" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:bg-[var(--sand)]"}`}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium transition-all ${activeTab === "products" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:bg-[var(--sand)]"}`}
           >
             <Package size={16} />
             <span>Productos</span>
           </button>
           <button
             onClick={() => setActiveTab("orders")}
-            className={`flex items-center gap-2 px-6 py-3 rounded-lg text-sm uppercase tracking-[0.1em] font-medium transition-all ${activeTab === "orders" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:bg-[var(--sand)]"}`}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium transition-all ${activeTab === "orders" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:bg-[var(--sand)]"}`}
           >
             <ShoppingBag size={16} />
             <span>Pedidos</span>

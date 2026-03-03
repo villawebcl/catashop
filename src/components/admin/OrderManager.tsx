@@ -192,11 +192,9 @@ export default function OrderManager({ orders, onRefresh }: OrderManagerProps) {
                                         />
                                     )
                                 ) : null}
-                                {!item.image_url || true ? (
-                                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-dashed border-[var(--line)] bg-white text-[10px] uppercase tracking-[0.1em] text-[var(--muted)] ${item.image_url ? 'hidden' : ''}`}>
-                                        Sin
-                                    </div>
-                                ) : null}
+                                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-dashed border-[var(--line)] bg-white text-[10px] uppercase tracking-[0.1em] text-[var(--muted)] ${item.image_url ? 'hidden' : ''}`}>
+                                    Sin
+                                </div>
                                 <div className="flex flex-col min-w-0 flex-1">
                                     <span className="text-sm font-medium text-[var(--ink)] truncate">{item.name}</span>
                                     <span className="text-xs text-[var(--muted)]">Cant: {item.quantity}</span>

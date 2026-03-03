@@ -104,9 +104,14 @@ export default function ProductManager({ products, onRefresh }: ProductManagerPr
         if (!file) return;
         setUploading(true);
         try {
-            const url = await uploadProductImage(file);
-            setForm((prev) => ({ ...prev, image_url: url }));
-            setMessage("Imagen subida correctamente.");
+            const result = await uploadProductImage(file);
+            setForm((prev) => ({ ...prev, image_url: result.publicUrl }));
+            if (result.optimized) {
+                const savedKb = Math.max(1, Math.round((result.originalBytes - result.uploadedBytes) / 1024));
+                setMessage(`Imagen optimizada y subida correctamente (ahorro aprox. ${savedKb} KB).`);
+            } else {
+                setMessage("Imagen subida correctamente.");
+            }
         } catch {
             setMessage("No se pudo subir la imagen.");
         } finally {
@@ -300,7 +305,11 @@ export default function ProductManager({ products, onRefresh }: ProductManagerPr
                 <div className="flex flex-col gap-4 mb-6">
                     <h2 className="font-[var(--font-display)] text-xl text-[var(--ink)]">Inventario</h2>
                     <div className="relative">
+                        <label htmlFor="product-search" className="sr-only">
+                            Buscar producto por nombre o categoría
+                        </label>
                         <input
+                            id="product-search"
                             type="text"
                             placeholder="Buscar producto..."
                             value={searchTerm}
