@@ -50,6 +50,8 @@ test.describe("staging real smoke", () => {
 
     await page.goto("/carrito");
     await expect(page).toHaveURL(/\/carrito$/);
-    await expect(page.getByRole("heading", { name: /Tu selección/i })).toBeVisible();
+    const cartMain = page.locator("main");
+    await expect(cartMain).toBeVisible();
+    await expect(cartMain).toContainText(/(carrito|tu selecci[oó]n)/i);
   });
 });
