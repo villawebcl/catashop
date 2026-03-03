@@ -81,6 +81,7 @@ npm run dev
 - `npm run e2e`: smoke e2e (Playwright)
 - `npm run e2e:staging`: smoke real contra URL configurada en `STAGING_BASE_URL`
 - `npm run e2e:production`: smoke real contra URL configurada en `STAGING_BASE_URL` (usado por workflow de produccion)
+- `npm run e2e:checkout-real`: smoke real no destructivo (agregar al carrito y abrir formulario)
 - `npm run e2e:headed`: smoke e2e en modo visible
 - `npm run e2e:install`: instala browser Chromium para Playwright
 - `npm run build`: build de producción
@@ -96,6 +97,7 @@ npm run dev
   - smoke e2e Playwright (`chromium`)
 - Workflow manual staging: `.github/workflows/e2e-staging.yml` (secret `STAGING_BASE_URL`).
 - Workflow manual produccion: `.github/workflows/e2e-production.yml` (secret `PRODUCTION_BASE_URL`).
+- Workflow manual checkout real: `.github/workflows/e2e-checkout-real.yml` (secret `STAGING_BASE_URL`).
 
 ## Seguridad de pedidos
 
@@ -146,3 +148,4 @@ npm run dev
 
 - Revisa `docs/PROJECT_STATUS_AND_ROADMAP.md` para el estado actual, riesgos y plan de mejora por sprints.
 - Runbook operativo: `docs/OPERATIONS_RUNBOOK.md`.
+- Checklist de release: `docs/RELEASE_CHECKLIST.md`.

@@ -45,6 +45,11 @@
 - Ejecuta smoke browser sin mocks contra staging.
 - Input opcional `expect_nonce_csp=true` valida header CSP en modo nonce estricto.
 
+### Checkout real no destructivo (manual)
+- Workflow: `.github/workflows/e2e-checkout-real.yml`.
+- Requiere secret `STAGING_BASE_URL`.
+- Valida carga de productos, agregado al carrito y apertura de formulario de envío sin enviar orden.
+
 ### Produccion real (manual)
 - Workflow: `.github/workflows/e2e-production.yml`.
 - Requiere secret `PRODUCTION_BASE_URL` (ejemplo: `https://catashop.cl` o dominio canonico productivo).
